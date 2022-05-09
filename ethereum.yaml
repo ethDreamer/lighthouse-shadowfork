@@ -1,0 +1,51 @@
+version: "3"
+services:
+  consensus-bn:
+    build: ./${CONSENSUS_NODE}
+    ports:
+      - "${CONSENSUS_DISC}:9000/tcp"
+      - "${CONSENSUS_DISC}:9000/udp"
+    expose:
+      - 5052
+    environment:
+      - ETH2_TESTNET
+    volumes:
+      - ./${CONSENSUS_NODE}/run:/home/beacon/run
+      - ./shared/:/shared
+    depends_on:
+      - execution
+      - proxy
+  consensus-vc:
+    build: ./${CONSENSUS_NODE}
+    environment:
+      - ETH2_TESTNET
+      - VALIDATOR_MNEMONIC
+      - VALIDATOR_COUNT
+      - VALIDATOR_GRAFFITI
+      - FEE_RECIPIENT
+    volumes:
+      - ./${CONSENSUS_NODE}/run:/home/beacon/run
+      - ./shared/:/shared
+    depends_on:
+      - consensus-bn
+  execution:
+    build: ./${EXECUTION_NODE}
+    environment:
+      - ETH2_TESTNET
+    ports:
+      - "${EXECUTION_DISC}:30303/tcp"
+      - "${EXECUTION_DISC}:30303/udp"
+    expose:
+      - 8545
+      - 8560
+    volumes:
+      - ./${EXECUTION_NODE}/run:/home/eth1/run
+      - ./shared/:/shared
+  proxy:
+    build: ./proxy
+    depends_on:
+      - execution
+    expose:
+      - 8560
+
+

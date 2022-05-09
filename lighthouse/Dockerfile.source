@@ -1,0 +1,50 @@
+# ------------------------------------------------------------------------------
+# Build Stage
+# ------------------------------------------------------------------------------
+
+FROM rust:latest as cargo-build
+
+ADD ./lighthouse /build
+WORKDIR /build
+RUN apt update && apt install -y cmake libclang-dev
+RUN cargo build --release
+
+# ------------------------------------------------------------------------------
+# Package Stage
+# ------------------------------------------------------------------------------
+
+FROM ubuntu:latest
+
+# create user to limit access in container
+RUN groupadd -g 1000 lighthouse_bn && useradd -r -u 1000 -g lighthouse_bn lighthouse_bn
+RUN apt update && apt install -y git
+
+WORKDIR /home/lighthouse_bn/run
+RUN chown lighthouse_bn:lighthouse_bn /home/lighthouse_bn/run/
+
+COPY --from=cargo-build /build/target/release/lighthouse /usr/local/bin/lighthouse
+RUN chmod a+x /usr/local/bin/lighthouse
+
+ENV ETH2_TESTNET goerli-shadow-fork-1
+USER lighthouse_bn
+
+ENTRYPOINT BOOTNODES=$(cat /shared/merge-testnets/${ETH2_TESTNET}/bootstrap_nodes.txt) && \
+    lighthouse \
+    --debug-level=debug \
+    --datadir=./datadir \
+    --testnet-dir=/shared/merge-testnets/$ETH2_TESTNET \
+    beacon \
+    --disable-enr-auto-update \
+    --eth1 \
+    --boot-nodes=$BOOTNODES \
+    --http \
+    --http-address=0.0.0.0 \
+    --metrics \
+    --http-allow-sync-stalled \
+    --merge \
+    --disable-packet-filter \
+    --jwt-secrets=/shared/jwt.secret \
+    --execution-endpoints=http://proxy:8560 \
+    --eth1-endpoints=http://execution:8545
+
+

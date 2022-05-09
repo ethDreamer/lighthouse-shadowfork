@@ -1,0 +1,28 @@
+# ------------------------------------------------------------------------------
+# Build Stage
+# ------------------------------------------------------------------------------
+FROM golang:1.18-alpine as builder
+
+RUN apk add --no-cache gcc musl-dev linux-headers git
+
+ADD ./go-ethereum /go-ethereum
+RUN cd /go-ethereum && go run build/ci.go install ./cmd/geth
+
+# ------------------------------------------------------------------------------
+# Package Stage
+# ------------------------------------------------------------------------------
+FROM alpine:latest
+
+RUN apk add --no-cache ca-certificates
+RUN addgroup -S eth1 -g 1000 && adduser -S eth1 -G eth1 -u 1000
+
+COPY --from=builder /go-ethereum/build/bin/geth /usr/bin/
+RUN chmod a+rx /usr/bin/geth
+
+WORKDIR /home/eth1/run
+RUN chown eth1:eth1 /home/eth1/run
+USER eth1
+
+ENTRYPOINT ./execute.sh
+
+

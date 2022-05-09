@@ -1,0 +1,27 @@
+# ------------------------------------------------------------------------------
+# Build Stage
+# ------------------------------------------------------------------------------
+FROM golang:1.18-alpine as builder
+
+RUN apk add --no-cache build-base git musl-dev linux-headers npm
+
+ADD ./eth2-beaconchain-explorer /src
+WORKDIR /src
+RUN make -B all
+
+# ------------------------------------------------------------------------------
+# Package Stage
+# ------------------------------------------------------------------------------
+FROM alpine:latest
+RUN apk --no-cache add libstdc++ libgcc bash python3 py3-ruamel
+
+RUN addgroup -S beacon -g 1000 && adduser -S beacon -G beacon -u 1000
+WORKDIR /home/beacon/run
+RUN chown beacon:beacon /home/beacon/run
+
+COPY --from=builder /src/bin /app/
+COPY --from=builder /src/config/default.config.yml /app/config.yml
+USER beacon
+
+ENTRYPOINT ./execute.sh
+
