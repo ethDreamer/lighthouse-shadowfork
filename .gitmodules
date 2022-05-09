@@ -1,0 +1,3 @@
+[submodule "shared/merge-testnets"]
+	path = shared/merge-testnets
+	url = https://github.com/eth-clients/merge-testnets.git
