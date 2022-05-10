@@ -1,7 +1,7 @@
 version: "3"
 services:
   consensus-bn:
-    build: ./${CONSENSUS_NODE}
+    build: ./${CONSENSUS_NODE}/build
     ports:
       - "${CONSENSUS_DISC}:9000/tcp"
       - "${CONSENSUS_DISC}:9000/udp"
@@ -17,7 +17,7 @@ services:
       - execution
       - proxy
   consensus-vc:
-    build: ./${CONSENSUS_NODE}
+    build: ./${CONSENSUS_NODE}/build
     expose:
       - 5064
     environment:
@@ -32,7 +32,7 @@ services:
     depends_on:
       - consensus-bn
   execution:
-    build: ./${EXECUTION_NODE}
+    build: ./${EXECUTION_NODE}/build
     environment:
       - ETH2_TESTNET
     ports:
@@ -54,7 +54,7 @@ services:
     depends_on:
       - execution
   prometheus:
-    build: ./metrics/prometheus
+    build: ./metrics/build/prometheus
     ports:
       - "${PROMETHEUS_PORT}:9090/tcp"
     expose:
@@ -65,7 +65,7 @@ services:
       - execution
       - consensus-bn
   grafana:
-    build: ./metrics/grafana
+    build: ./metrics/build/grafana
     ports:
       - "${GRAFANA_PORT}:3000/tcp"
     environment:
