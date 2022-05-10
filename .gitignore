@@ -1,0 +1,7 @@
+explorer/postgres/db
+geth/run/datadir
+lighthouse/run/datadir
+metrics/run/grafana/data
+metrics/run/prometheus/data
+*.swo
+*.swp
