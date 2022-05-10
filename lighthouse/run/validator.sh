@@ -91,6 +91,6 @@ eval lighthouse \
     --metrics-allow-origin \* \
     --init-slashing-protection \
     --beacon-nodes http://consensus-bn:5052 \
-    $GRAFFITI_ARG \
+    --graffiti="$VALIDATOR_GRAFFITI" \
     $FEE_ARG
     
