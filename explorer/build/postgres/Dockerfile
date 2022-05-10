@@ -8,3 +8,5 @@ RUN groupadd -g 1000 pguser && useradd -r -u 1000 -g pguser pguser
 
 RUN mkdir -p /postgresql/data && chown -R pguser:pguser /postgresql
 RUN chmod 0700 /postgresql/data
+
+USER pguser

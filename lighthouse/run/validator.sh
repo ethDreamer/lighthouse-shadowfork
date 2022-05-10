@@ -81,7 +81,7 @@ fi
 
 echo "******************* STARTING LIGHTHOUSE VALIDATOR NODE *******************"
 
-eval lighthouse \
+exec lighthouse \
     --debug-level=info \
     --datadir ./datadir \
     --testnet-dir=/shared/merge-testnets/$ETH2_TESTNET \
