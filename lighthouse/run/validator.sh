@@ -86,6 +86,9 @@ eval lighthouse \
     --datadir ./datadir \
     --testnet-dir=/shared/merge-testnets/$ETH2_TESTNET \
     validator_client \
+    --metrics \
+    --metrics-address=0.0.0.0 \
+    --metrics-allow-origin \* \
     --init-slashing-protection \
     --beacon-nodes http://consensus-bn:5052 \
     $GRAFFITI_ARG \

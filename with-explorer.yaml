@@ -7,6 +7,7 @@ services:
       - "${CONSENSUS_DISC}:9000/udp"
     expose:
       - 5052
+      - 5054
     environment:
       - ETH2_TESTNET
     volumes:
@@ -17,6 +18,8 @@ services:
       - proxy
   consensus-vc:
     build: ./${CONSENSUS_NODE}
+    expose:
+      - 5064
     environment:
       - ETH2_TESTNET
       - VALIDATOR_MNEMONIC
@@ -38,17 +41,18 @@ services:
     expose:
       - 8545
       - 8560
+      - 6060
     volumes:
       - ./${EXECUTION_NODE}/run:/home/eth1/run
       - ./shared/:/shared
   proxy:
     build: ./proxy
-    depends_on:
-      - execution
     expose:
       - 8560
     volumes:
       - ./proxy/run:/home/json_rpc_snoop/run
+    depends_on:
+      - execution
   postgres:
     build:
       context: ./explorer
@@ -81,5 +85,26 @@ services:
       - execution
       - consensus-bn
       - postgres
-
+  prometheus:
+    build: ./metrics/prometheus
+    ports:
+      - "${PROMETHEUS_PORT}:9090/tcp"
+    expose:
+      - 9090
+    volumes:
+      - ./metrics/run/prometheus/:/home/promuser
+    depends_on:
+      - execution
+      - consensus-bn
+  grafana:
+    build: ./metrics/grafana
+    ports:
+      - "${GRAFANA_PORT}:3000/tcp"
+    environment:
+      - GF_PATHS_DATA=/home/grafuser/data
+      - GF_PATHS_LOGS=/home/grafuser/data
+    volumes:
+      - ./metrics/run/grafana/:/home/grafuser
+    depends_on:
+      - prometheus
 

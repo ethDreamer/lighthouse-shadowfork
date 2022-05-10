@@ -1,0 +1,16 @@
+global:
+    scrape_interval: 15s
+
+scrape_configs:
+  - job_name: 'consensus-bn'
+    static_configs:
+      - targets: ['consensus-bn:5054']
+  - job_name: 'consensus-vc'
+    static_configs:
+      - targets: ['consensus-vc:5064']
+  - job_name: 'execution'
+    metrics_path: '/debug/metrics/prometheus'
+    static_configs:
+      - targets: ['execution:6060']
+
+

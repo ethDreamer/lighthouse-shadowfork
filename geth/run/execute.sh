@@ -42,6 +42,8 @@ exec geth \
     --authrpc.port 8560 \
     --authrpc.vhosts \* \
     --authrpc.jwtsecret=/shared/jwt.secret \
+    --metrics \
+    --metrics.addr 0.0.0.0 \
     $TTDARG
 
 

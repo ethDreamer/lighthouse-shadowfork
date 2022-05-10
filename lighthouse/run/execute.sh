@@ -39,6 +39,9 @@ exec lighthouse \
     --http \
     --http-address=0.0.0.0 \
     --metrics \
+    --metrics-address=0.0.0.0 \
+    --metrics-allow-origin \* \
+    --validator-monitor-auto \
     --http-allow-sync-stalled \
     --merge \
     --disable-packet-filter \

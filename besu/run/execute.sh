@@ -44,6 +44,9 @@ exec besu \
     --engine-jwt-enabled=true \
     --engine-jwt-secret=/shared/jwt.secret \
     --engine-rpc-http-port=8560 \
+    --metrics-enabled \
+    --metrics-host=0.0.0.0 \
+    --metrics-port 6060 \
     $BOOTARG \
     $NETARG \
     $GENARG

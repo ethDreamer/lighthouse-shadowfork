@@ -12,6 +12,10 @@ export VALIDATOR_COUNT=0
 export VALIDATOR_GRAFFITI="${CONSENSUS_NODE}-${EXECUTION_NODE} (@ethDreamer)"
 export FEE_RECIPIENT="aba1e73b3c0908150fa5d1c4b6e8e8a839da7c6c"
 
+# metrics settings
+export PROMETHEUS_PORT=9090 # port to serve prometheus front-end
+export GRAFANA_PORT=3000    # port to serve grafana front-end
+
 export POSTGRES_PASSWORD=pass
 export POSTGRES_USER=pguser
 export POSTGRES_DB=db
