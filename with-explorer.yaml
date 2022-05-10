@@ -47,6 +47,8 @@ services:
       - execution
     expose:
       - 8560
+    volumes:
+      - ./proxy/run:/home/json_rpc_snoop/run
   postgres:
     build:
       context: ./explorer

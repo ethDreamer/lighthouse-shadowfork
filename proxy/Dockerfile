@@ -1,5 +1,8 @@
 FROM parithoshj/json_rpc_snoop:v1.0.0-x86
 
-COPY ./execute.sh /home/json_rpc_snoop/bin
+USER root
+RUN chown -R json_rpc_snoop:json_rpc_snoop /home/json_rpc_snoop
+USER json_rpc_snoop
+RUN mkdir /home/json_rpc_snoop/run
 
-ENTRYPOINT /home/json_rpc_snoop/bin/execute.sh
+ENTRYPOINT /home/json_rpc_snoop/run/execute.sh

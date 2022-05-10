@@ -4,7 +4,7 @@ TESTNETDIR=/shared/merge-testnets/${ETH2_TESTNET}
 
 BOOTFILE=${TESTNETDIR}/el_bootnode.txt
 if [ -e $BOOTFILE ]; then
-	BOOTARG="--bootnodes=$(cat $BOOTFILE | sed 's/\s+//g' | tr '\n' ',' | sed 's/,\s*$//')"
+	BOOTARG="--bootnodes=$(cat $BOOTFILE | sed 's/\s\+//g' | tr '\n' ',' | sed 's/,\s*$//')"
 fi
 
 GENFILE=${TESTNETDIR}/genesis.json
