@@ -9,6 +9,11 @@ Clone the repository along with submodules for latest testnets:
 git clone --recurse-submodules https://github.com/ethDreamer/lighthouse-shadowfork.git
 ```
 
+Ensure you have the latest copy of merge-testnets:
+```
+cd lighthouse-shadowfork && git submodule update --remote
+```
+
 #### Set Variables in `globals.sh`
 
 - `ETH2_TESTNET`   # the name of the testnet directory to use (see `./shared/merge-testnets`)
@@ -16,6 +21,14 @@ git clone --recurse-submodules https://github.com/ethDreamer/lighthouse-shadowfo
 - `CONSENSUS_DISC` # the discovery port (TCP/UDP) for lighthouse (should be accessible from internet)
 - `EXECUTION_DISC` # the discovery port (TCP/UDP) for execution node (should be accessible from internet)
 - `EXPLORER_PORT`  # port to serve the front-end for the beacon explorer
+- `PROMETHEUS_PORT`    # port to serve the prometheus front-end
+- `GRAFANA_PORT`       # port to serve the grafana front-end
+
+#### Validator Options if you have validators on the testnet
+- `VALIDATOR_MNEMONIC` # set this to the mnemonic to generate validators
+- `VALIDATOR_COUNT`    # the number of validators on the mnemonic
+- `VALIDATOR_GRAFFITI` # set your validator graffiti (must be <= 32 characters)
+- `FEE_RECIPIENT`      # set address of the fee recipient
 
 After editing these be sure to run:
 ```
