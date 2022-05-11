@@ -8,8 +8,11 @@ scrape_configs:
   - job_name: 'consensus-vc'
     static_configs:
       - targets: ['consensus-vc:5064']
-  - job_name: 'execution'
+  - job_name: 'geth'
     metrics_path: '/debug/metrics/prometheus'
+    static_configs:
+      - targets: ['execution:6060']
+  - job_name: 'besu'
     static_configs:
       - targets: ['execution:6060']
 
