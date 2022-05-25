@@ -27,7 +27,6 @@ fi
 
 echo "******************** STARTING BESU ********************"
 
-
 exec besu \
     --data-path="./datadir" \
     --rpc-http-enabled=true \
@@ -40,10 +39,11 @@ exec besu \
     --Xmerge-support=true \
     --data-storage-format="BONSAI" \
     --rpc-http-host=0.0.0.0 \
+    --engine-rpc-enabled \
     --engine-host-allowlist="*" \
     --engine-jwt-enabled=true \
     --engine-jwt-secret=/shared/jwt.secret \
-    --engine-rpc-http-port=8560 \
+    --engine-rpc-port=8560 \
     --metrics-enabled \
     --metrics-host=0.0.0.0 \
     --metrics-port 6060 \
