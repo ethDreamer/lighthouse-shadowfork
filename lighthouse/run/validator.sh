@@ -86,6 +86,11 @@ exec lighthouse \
     --datadir ./datadir \
     --testnet-dir=/shared/merge-testnets/$ETH2_TESTNET \
     validator_client \
+    --http \
+    --http-port 5062 \
+    --http-address=0.0.0.0 \
+    --unencrypted-http-transport \
+    --http-allow-origin \* \
     --metrics \
     --metrics-address=0.0.0.0 \
     --metrics-allow-origin \* \
@@ -93,4 +98,3 @@ exec lighthouse \
     --beacon-nodes http://consensus-bn:5052 \
     --graffiti="$VALIDATOR_GRAFFITI" \
     $FEE_ARG
-    

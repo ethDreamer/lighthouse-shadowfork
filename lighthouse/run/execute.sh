@@ -29,7 +29,7 @@ fi
 echo "******************** STARTING LIGHTHOUSE BEACON NODE ********************"
 
 exec lighthouse \
-    --debug-level=debug \
+    --debug-level=info \
     --datadir ./datadir \
     --testnet-dir=/shared/merge-testnets/$ETH2_TESTNET \
     beacon \
