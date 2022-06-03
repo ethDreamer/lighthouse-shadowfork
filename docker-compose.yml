@@ -17,6 +17,7 @@ services:
       - execution
       - proxy
   consensus-vc:
+    profiles: ["validator"]
     build: ./${CONSENSUS_NODE}/build
     expose:
       - 5064
@@ -54,6 +55,7 @@ services:
     depends_on:
       - execution
   postgres:
+    profiles: ["explorer"]
     build: ./explorer/build/postgres
     user: "1000:1000"
     restart: always
@@ -67,6 +69,7 @@ services:
     volumes:
       - ./explorer/run/postgres/db:/postgresql/data
   explorer:
+    profiles: ["explorer"]
     build: ./explorer/build/beaconchain
     ports:
       - "$EXPLORER_PORT:3333/tcp"
@@ -83,6 +86,7 @@ services:
       - consensus-bn
       - postgres
   prometheus:
+    profiles: ["metrics"]
     build: ./metrics/build/prometheus
     ports:
       - "${PROMETHEUS_PORT}:9090/tcp"
@@ -94,6 +98,7 @@ services:
       - execution
       - consensus-bn
   grafana:
+    profiles: ["metrics"]
     build: ./metrics/build/grafana
     ports:
       - "${GRAFANA_PORT}:3000/tcp"

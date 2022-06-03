@@ -37,29 +37,26 @@ source ./globals.sh
 
 #### Start the nodes
 
-There are two yaml files:
-- `ethereum.yaml` # runs without beacon explorer
-- `with-explorer.yaml` # runs with beacon explorer
-
-Regardless of which one you want you use, it's best to start the explorer after you've synced the consensus/execution nodes. So start up without the explorer first:
-
+To enable only essential services (consensus/execution/proxy nodes), simply run:
 ```
-docker-compose -f ethereum.yaml up -d
+docker-compose up -d
 ```
 
-That should start all the services. You can view running containers with `docker container ls`. You can view container logs with `docker logs -f <CONTAINER ID>`. Once the nodes are synced, you can bring them down with:
+The docker-compose file includes profiles that can be used to start additional optional services. These profiles include:
+- `validator`: start up a validator client
+- `metrics`: start up a prometheus/grafana server and gather metrics on the nodes
+- `explorer`: start up a beacon chain explorer (recommend this only be started after nodes fully sync)
 
+Any of these services can be included by passing `--profile` on the command line to docker-compose. For example, to start the validator client and track metrics run:
 ```
-docker-compose -f ethereum.yaml down
+docker-compose --profile validator --profile metrics up -d
 ```
 
-and then start everything (including the beacon explorer) with:
+Currently running containers can be viewed with `docker container ls`. Container logs can be viewed with `docker logs -f <CONTAINER ID>`. To stop all containers, simply run
 ```
-docker-compose -f with-explorer up -d
+docker-compose down
 ```
 
-The beacon explorer front end will be accessible at `http://$HOSTNAME:$EXPLORER_PORT`
-
-
+If run with the `explorer` profile, the beacon explorer front end will be accessible at `http://$HOSTNAME:$EXPLORER_PORT`. Similarly, if run with the `metrics` profile, the prometheus front-end will be accessible at `http://$HOSTNAME:$PROMETHEUS_PORT` and grafana will be accessible at `http://$HOSTNAME:$GRAFANA_PORT`.
 
 
