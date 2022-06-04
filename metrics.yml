@@ -1,0 +1,39 @@
+version: "3"
+services:
+  consensus-bn:
+    environment:
+      - METRICS_ENABLED=true
+    expose:
+      - 5054
+  consensus-vc:
+    environment:
+      - METRICS_ENABLED=true
+    expose:
+      - 5064
+  execution:
+    environment:
+      - METRICS_ENABLED=true
+    expose:
+      - 6060
+  prometheus:
+    build: ./metrics/build/prometheus
+    ports:
+      - "${PROMETHEUS_PORT}:9090/tcp"
+    expose:
+      - 9090
+    volumes:
+      - ./metrics/run/prometheus/:/home/promuser
+    depends_on:
+      - execution
+      - consensus-bn
+  grafana:
+    build: ./metrics/build/grafana
+    ports:
+      - "${GRAFANA_PORT}:3000/tcp"
+    environment:
+      - GF_PATHS_DATA=/home/grafuser/data
+      - GF_PATHS_LOGS=/home/grafuser/data
+    volumes:
+      - ./metrics/run/grafana/:/home/grafuser
+    depends_on:
+      - prometheus

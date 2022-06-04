@@ -23,7 +23,17 @@ fi
 
 BOOTFILE=/shared/merge-testnets/${ETH2_TESTNET}/bootstrap_nodes.txt
 if [ -e $BOOTFILE ]; then
-    BOOTARG="--boot-nodes=$(cat $BOOTFILE | tr '\n' ',' | sed 's/,\s*$//')"
+    BOOT_ARG="--boot-nodes=$(cat $BOOTFILE | tr '\n' ',' | sed 's/,\s*$//')"
+fi
+
+if [ ! -z "$METRICS_ENABLED" ]; then
+    METRICS_ARG="--metrics --metrics-address=0.0.0.0 --metrics-allow-origin=*"
+fi
+
+if [ ! -z "$PROXY_ENABLED" ]; then
+    EE_TARGET="http://proxy:8560"
+else
+    EE_TARGET="http://execution:8560"
 fi
 
 echo "******************** STARTING LIGHTHOUSE BEACON NODE ********************"
@@ -35,17 +45,15 @@ exec lighthouse \
     beacon \
     --disable-enr-auto-update \
     --eth1 \
-    $BOOTARG \
+    $BOOT_ARG \
     --http \
     --http-address=0.0.0.0 \
-    --metrics \
-    --metrics-address=0.0.0.0 \
-    --metrics-allow-origin \* \
+    $(printf '%s' "$METRICS_ARG") \
     --validator-monitor-auto \
     --http-allow-sync-stalled \
     --merge \
     --disable-packet-filter \
     --jwt-secrets=/shared/jwt.secret \
-    --execution-endpoints=http://proxy:8560 \
+    --execution-endpoints=$EE_TARGET \
     --eth1-endpoints=http://execution:8545
 

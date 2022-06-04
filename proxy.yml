@@ -1,0 +1,19 @@
+version: "3"
+services:
+  consensus-bn:
+    environment:
+      - PROXY_ENABLED=true
+    depends_on:
+      - proxy
+  execution:
+    environment:
+      - PROXY_ENABLED=true
+  proxy:
+    build: ./proxy
+    expose:
+      - 8560
+    volumes:
+      - ./proxy/run:/home/json_rpc_snoop/run
+    depends_on:
+      - execution
+
