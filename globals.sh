@@ -21,6 +21,7 @@ export POSTGRES_USER=pguser
 export POSTGRES_DB=db
 export EXPLORER_PORT=3333 # the port to serve the front-end for the beacon explorer
 
+mkdir -p explorer/run/postgres/db
 
 # These are unused below
 # lighthouse
@@ -35,7 +36,6 @@ export PROXY_BRANCH=master
 # explorer
 export EXPLORER_REPO=https://github.com/protolambda/eth2-beaconchain-explorer.git
 export EXPLORER_BRANCH=rebasing-from-master
-
 
 
 

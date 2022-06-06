@@ -37,26 +37,26 @@ source ./globals.sh
 
 #### Start the nodes
 
-To enable only essential services (consensus/execution/proxy nodes), simply run:
+To enable only the base (consensus/execution/validator) nodes, simply run:
 ```
-docker-compose up -d
-```
-
-The docker-compose file includes profiles that can be used to start additional optional services. These profiles include:
-- `validator`: start up a validator client
-- `metrics`: start up a prometheus/grafana server and gather metrics on the nodes
-- `explorer`: start up a beacon chain explorer (recommend this only be started after nodes fully sync)
-
-Any of these services can be included by passing `--profile` on the command line to docker-compose. For example, to start the validator client and track metrics run:
-```
-docker-compose --profile validator --profile metrics up -d
+docker-compose -f ethereum.yml up -d
 ```
 
-Currently running containers can be viewed with `docker container ls`. Container logs can be viewed with `docker logs -f <CONTAINER ID>`. To stop all containers, simply run
+This repo contains configurations to enable additional services:
+- `metrics.yml`: enables collecting metrics and spins up prometheus/grafana
+- `proxy.yml`: spin up JSON-RPC proxy for debugging communication between consensus/execution layer
+- `explorer.yml`: spins up beaconchain explorer and postgres db
+
+Any of these services can be included by passing `-f [YAML_FILE]` after `ethereum.yml` on the command line to docker-compose. For example, to start JSON-RPC proxy and track metrics run:
 ```
-docker-compose down
+docker-compose -f ethereum.yml -f proxy.yml -f metrics.yml up -d
 ```
 
-If run with the `explorer` profile, the beacon explorer front end will be accessible at `http://$HOSTNAME:$EXPLORER_PORT`. Similarly, if run with the `metrics` profile, the prometheus front-end will be accessible at `http://$HOSTNAME:$PROMETHEUS_PORT` and grafana will be accessible at `http://$HOSTNAME:$GRAFANA_PORT`.
+Currently running containers can be viewed with `docker container ls`. Container logs can be viewed with `docker logs -f <CONTAINER ID>`. To stop all containers, run the same options used to bring up the services but replace `up -d` with `down`. For example, to stop all the services started above run:
+```
+docker-compose -f ethereum.yml -f proxy.yml -f metrics.yml down
+```
+
+If the beacon explorer is enabled, the front end will be accessible at `http://$HOSTNAME:$EXPLORER_PORT`. Similarly, if metrics are enabled, the prometheus front-end will be accessible at `http://$HOSTNAME:$PROMETHEUS_PORT` and grafana will be accessible at `http://$HOSTNAME:$GRAFANA_PORT`.
 
 

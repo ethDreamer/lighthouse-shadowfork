@@ -1,0 +1,31 @@
+version: "3"
+services:
+  postgres:
+    build: ./explorer/build/postgres
+    user: "1000:1000"
+    environment:
+      - POSTGRES_PASSWORD
+      - POSTGRES_USER
+      - POSTGRES_DB
+      - PGDATA=/postgresql/data
+    expose:
+      - 5432
+    volumes:
+      - ./explorer/run/postgres/db:/postgresql/data
+  explorer:
+    build: ./explorer/build/beaconchain
+    ports:
+      - "$EXPLORER_PORT:3333/tcp"
+    environment:
+      - ETH2_TESTNET
+      - POSTGRES_PASSWORD
+      - POSTGRES_USER
+      - POSTGRES_DB
+    volumes:
+      - ./explorer/run/beaconchain:/home/beacon/run
+      - ./shared/:/shared
+    depends_on:
+      - execution
+      - consensus-bn
+      - postgres
+

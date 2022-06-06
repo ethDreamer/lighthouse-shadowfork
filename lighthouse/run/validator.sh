@@ -79,6 +79,10 @@ if [ ! -z ${FEE_RECIPIENT+x} ]; then
     FEE_ARG="--suggested-fee-recipient=$FEE_RECIPIENT"
 fi
 
+if [ ! -z "$METRICS_ENABLED" ]; then
+    METRICS_ARG="--metrics --metrics-address=0.0.0.0 --metrics-allow-origin=*"
+fi
+
 echo "******************* STARTING LIGHTHOUSE VALIDATOR NODE *******************"
 
 exec lighthouse \
@@ -91,9 +95,7 @@ exec lighthouse \
     --http-address=0.0.0.0 \
     --unencrypted-http-transport \
     --http-allow-origin \* \
-    --metrics \
-    --metrics-address=0.0.0.0 \
-    --metrics-allow-origin \* \
+    $(printf '%s' "$METRICS_ARG") \
     --init-slashing-protection \
     --beacon-nodes http://consensus-bn:5052 \
     --graffiti="$VALIDATOR_GRAFFITI" \
