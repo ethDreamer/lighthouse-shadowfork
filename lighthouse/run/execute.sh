@@ -26,19 +26,30 @@ if [ -e $BOOTFILE ]; then
     BOOT_ARG="--boot-nodes=$(cat $BOOTFILE | tr '\n' ',' | sed 's/,\s*$//')"
 fi
 
-if [ ! -z "$METRICS_ENABLED" ]; then
+if [ "$METRICS_ENABLED" = "true" ]; then
     METRICS_ARG="--metrics --metrics-address=0.0.0.0 --metrics-allow-origin=*"
 fi
 
-if [ ! -z "$PROXY_ENABLED" ]; then
+if [ "$PROXY_ENABLED" = "true" ]; then
     EE_TARGET="http://proxy:8560"
 else
     EE_TARGET="http://execution:8560"
 fi
 
+
+if [ "$RELAY_ENABLED" = "true" ]; then
+    RELAY_ARG="--builder=http://relay-proxy:8560"
+fi
+
 echo "******************** STARTING LIGHTHOUSE BEACON NODE ********************"
 
-exec lighthouse \
+if [ -e ./lighthouse.bin ]; then
+    LIGHTHOUSE=./lighthouse.bin
+else
+    LIGHTHOUSE=lighthouse
+fi
+
+exec $LIGHTHOUSE \
     --debug-level=info \
     --datadir ./datadir \
     --testnet-dir=/shared/merge-testnets/$ETH2_TESTNET \
@@ -52,8 +63,9 @@ exec lighthouse \
     --validator-monitor-auto \
     --http-allow-sync-stalled \
     --merge \
+    --eth1-endpoints=http://execution:8545 \
     --disable-packet-filter \
     --jwt-secrets=/shared/jwt.secret \
     --execution-endpoints=$EE_TARGET \
-    --eth1-endpoints=http://execution:8545
+    $RELAY_ARG
 

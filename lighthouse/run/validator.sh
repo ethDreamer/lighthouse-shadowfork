@@ -79,13 +79,24 @@ if [ ! -z ${FEE_RECIPIENT+x} ]; then
     FEE_ARG="--suggested-fee-recipient=$FEE_RECIPIENT"
 fi
 
-if [ ! -z "$METRICS_ENABLED" ]; then
+if [ "$METRICS_ENABLED" = "true" ]; then
     METRICS_ARG="--metrics --metrics-address=0.0.0.0 --metrics-allow-origin=*"
 fi
 
+if [ "$RELAY_ENABLED" = "true" ]; then
+    RELAY_ARG="--private-tx-proposals"
+fi
+
+
 echo "******************* STARTING LIGHTHOUSE VALIDATOR NODE *******************"
 
-exec lighthouse \
+if [ -e ./lighthouse.bin ]; then
+    LIGHTHOUSE=./lighthouse.bin
+else
+    LIGHTHOUSE=lighthouse
+fi
+
+exec $LIGHTHOUSE \
     --debug-level=info \
     --datadir ./datadir \
     --testnet-dir=/shared/merge-testnets/$ETH2_TESTNET \
@@ -99,4 +110,5 @@ exec lighthouse \
     --init-slashing-protection \
     --beacon-nodes http://consensus-bn:5052 \
     --graffiti="$VALIDATOR_GRAFFITI" \
+    $RELAY_ARG \
     $FEE_ARG
