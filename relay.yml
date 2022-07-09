@@ -1,0 +1,29 @@
+version: "3"
+services:
+  consensus-bn:
+    environment:
+      - RELAY_ENABLED=true
+  consensus-vc:
+    environment:
+      - RELAY_ENABLED=true
+  mock-relay:
+    build: ./relay/build
+    expose:
+      - 8560
+    volumes:
+      - ./relay/run:/home/relay/run
+      - ./shared:/shared
+    depends_on:
+      - execution
+      - consensus-bn
+  relay-proxy:
+    build: ./proxy
+    environment:
+      - RELAY_ENABLED=true
+    expose:
+      - 8560
+    volumes:
+      - ./proxy/run:/home/json_rpc_snoop/run
+    depends_on:
+      - mock-relay
+
