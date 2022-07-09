@@ -31,9 +31,10 @@ services:
     build: ./${EXECUTION_NODE}/build
     environment:
       - ETH2_TESTNET
+      - EXECUTION_DISC
     ports:
-      - "${EXECUTION_DISC}:30303/tcp"
-      - "${EXECUTION_DISC}:30303/udp"
+      - "${EXECUTION_DISC}:${EXECUTION_DISC}/tcp"
+      - "${EXECUTION_DISC}:${EXECUTION_DISC}/udp"
     expose:
       - 8545
       - 8560

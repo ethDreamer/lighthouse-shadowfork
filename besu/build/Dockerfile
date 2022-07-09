@@ -3,7 +3,7 @@ FROM hyperledger/besu:develop
 WORKDIR /home/eth1/run
 USER root
 
-RUN apt update && apt install -y tini
+RUN apt update && apt install -y tini dnsutils
 
 RUN chown besu:besu /home/eth1/run
 USER besu
