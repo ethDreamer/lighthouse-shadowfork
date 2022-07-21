@@ -37,7 +37,6 @@ exec besu \
     --p2p-port=$EXECUTION_DISC \
     --nat-method=DOCKER \
     --sync-mode=X_SNAP \
-    --Xmerge-support=true \
     --engine-rpc-enabled \
     --engine-host-allowlist="*" \
     --engine-jwt-enabled=true \
