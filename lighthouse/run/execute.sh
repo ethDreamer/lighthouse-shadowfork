@@ -40,6 +40,10 @@ fi
 if [ "$RELAY_ENABLED" = "true" ]; then
     RELAY_ARG="--builder=http://relay-proxy:8560"
 fi
+if [ "$MEVBOOST_ENABLED" = "true" ]; then
+    RELAY_ARG="--builder=http://boost-proxy:8560"
+fi
+
 
 echo "******************** STARTING LIGHTHOUSE BEACON NODE ********************"
 

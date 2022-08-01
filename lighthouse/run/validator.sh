@@ -86,7 +86,9 @@ fi
 if [ "$RELAY_ENABLED" = "true" ]; then
     RELAY_ARG="--private-tx-proposals"
 fi
-
+if [ "$MEVBOOST_ENABLED" = "true" ]; then
+    RELAY_ARG="--private-tx-proposals"
+fi
 
 echo "******************* STARTING LIGHTHOUSE VALIDATOR NODE *******************"
 

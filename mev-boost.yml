@@ -1,0 +1,28 @@
+version: "3"
+services:
+  consensus-bn:
+    environment:
+      - MEVBOOST_ENABLED=true
+  consensus-vc:
+    environment:
+      - MEVBOOST_ENABLED=true
+  mev-boost:
+    build: ./mev-boost/build
+    expose:
+      - 8560
+    volumes:
+      - ./mev-boost/run:/home/boost/run
+    depends_on:
+      - execution
+      - consensus-bn
+  boost-proxy:
+    build: ./proxy
+    environment:
+      - MEVBOOST_ENABLED=true
+    expose:
+      - 8560
+    volumes:
+      - ./proxy/run:/home/json_rpc_snoop/run
+    depends_on:
+      - mev-boost
+
