@@ -13,8 +13,8 @@ if [ -e $GENFILE ]; then
     if [ ! -e ./datadir ]; then
         echo "**** INITIALIZING DATADIR FROM GENESIS FILE ****"
         echo "$GENFILE"
+        geth --datadir ./datadir init $GENFILE
         echo "**** INITIALIZING DATADIR FROM GENESIS FILE ****"
-        geth init $GENFILE  --datadir ./datadir
     fi
 fi
 
@@ -37,7 +37,7 @@ exec geth \
     --http.addr 0.0.0.0 \
     --http.api="engine,eth,web3,net,debug,admin" \
     --http.vhosts=\* \
-    --port 30303 \
+    --port $EXECUTION_DISC \
     $NET_ARG \
     $BOOT_ARG \
     --syncmode snap \
