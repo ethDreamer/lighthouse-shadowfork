@@ -64,7 +64,6 @@ exec $LIGHTHOUSE \
     --http \
     --http-address=0.0.0.0 \
     $(printf '%s' "$METRICS_ARG") \
-    --validator-monitor-auto \
     --http-allow-sync-stalled \
     --merge \
     --eth1-endpoints=http://execution:8545 \

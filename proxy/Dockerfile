@@ -1,4 +1,4 @@
-FROM ethdreamer/json_rpc_snoop:latest
+FROM ethdreamer/json_rpc_snoop:develop
 
 USER root
 RUN chown -R json_rpc_snoop:json_rpc_snoop /home/json_rpc_snoop

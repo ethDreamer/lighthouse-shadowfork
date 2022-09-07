@@ -7,11 +7,12 @@ services:
     environment:
       - MEVBOOST_ENABLED=true
   mev-boost:
+    environment:
+      - MOCK_PROXY_ENABLED=true
+      - ETH2_TESTNET
     build: ./mev-boost/build
     expose:
       - 8560
-    environment:
-      - ETH2_TESTNET
     volumes:
       - ./mev-boost/run:/home/boost/run
       - ./shared:/shared
@@ -28,4 +29,26 @@ services:
       - ./proxy/run:/home/json_rpc_snoop/run
     depends_on:
       - mev-boost
+  mock-relay:
+    build: ./relay/build
+    environment:
+      - MOCK_PROXY_ENABLED=true
+    expose:
+      - 8560
+    volumes:
+      - ./relay/run:/home/relay/run
+      - ./shared:/shared
+    depends_on:
+      - execution
+      - consensus-bn
+  mock-proxy:
+    build: ./proxy
+    environment:
+      - RELAY_ENABLED=true
+    expose:
+      - 8560
+    volumes:
+      - ./proxy/run:/home/json_rpc_snoop/run
+    depends_on:
+      - mock-relay
 
