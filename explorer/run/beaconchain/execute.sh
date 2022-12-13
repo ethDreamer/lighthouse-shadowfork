@@ -4,7 +4,7 @@
 #   sleep 10
 #done
 
-./mkconfig.py /shared/merge-testnets/${ETH2_TESTNET}/config.yaml /app/config.yml > ./config-${ETH2_TESTNET}.yml
+./mkconfig.py /shared/${TESTNET_REPO}/${ETH2_TESTNET}/config.yaml /app/config.yml > ./config-${ETH2_TESTNET}.yml
 
 sleep 5
 

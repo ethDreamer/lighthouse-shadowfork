@@ -8,6 +8,7 @@ services:
     expose:
       - 5052
     environment:
+      - TESTNET_REPO
       - ETH2_TESTNET
     volumes:
       - ./${CONSENSUS_NODE}/run:/home/beacon/run
@@ -18,6 +19,7 @@ services:
     build: ./${CONSENSUS_NODE}/build
     environment:
       - ETH2_TESTNET
+      - TESTNET_REPO
       - VALIDATOR_MNEMONIC
       - VALIDATOR_COUNT
       - VALIDATOR_GRAFFITI
@@ -31,6 +33,7 @@ services:
     build: ./${EXECUTION_NODE}/build
     environment:
       - ETH2_TESTNET
+      - TESTNET_REPO
       - EXECUTION_DISC
     ports:
       - "${EXECUTION_DISC}:${EXECUTION_DISC}/tcp"

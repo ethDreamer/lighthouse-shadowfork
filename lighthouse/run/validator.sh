@@ -19,7 +19,7 @@ cleanup() {
 generate_wallet() {
     lighthouse \
         --datadir ./datadir \
-        --testnet-dir=/shared/merge-testnets/$ETH2_TESTNET \
+        --testnet-dir=/shared/${TESTNET_REPO}/$ETH2_TESTNET \
         account_manager \
         wallet \
         recover \
@@ -31,7 +31,7 @@ generate_wallet() {
 generate_validators() {
     lighthouse \
         --datadir ./datadir \
-        --testnet-dir=/shared/merge-testnets/$ETH2_TESTNET \
+        --testnet-dir=/shared/${TESTNET_REPO}/$ETH2_TESTNET \
         account_manager \
         validator \
         create \
@@ -101,7 +101,7 @@ fi
 exec $LIGHTHOUSE \
     --debug-level=info \
     --datadir ./datadir \
-    --testnet-dir=/shared/merge-testnets/$ETH2_TESTNET \
+    --testnet-dir=/shared/${TESTNET_REPO}/$ETH2_TESTNET \
     validator_client \
     --http \
     --http-port 5062 \

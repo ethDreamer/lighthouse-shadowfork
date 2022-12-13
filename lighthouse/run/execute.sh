@@ -21,7 +21,7 @@ fi
 
 # No VALIDATOR_* vars set -> run beacon node
 
-BOOTFILE=/shared/merge-testnets/${ETH2_TESTNET}/bootstrap_nodes.txt
+BOOTFILE=/shared/${TESTNET_REPO}/${ETH2_TESTNET}/custom_config_data/bootstrap_nodes.txt
 if [ -e $BOOTFILE ]; then
     BOOT_ARG="--boot-nodes=$(cat $BOOTFILE | tr '\n' ',' | sed 's/,\s*$//')"
 fi
@@ -56,7 +56,7 @@ fi
 exec $LIGHTHOUSE \
     --debug-level=info \
     --datadir ./datadir \
-    --testnet-dir=/shared/merge-testnets/$ETH2_TESTNET \
+    --testnet-dir=/shared/${TESTNET_REPO}/$ETH2_TESTNET/custom_config_data \
     beacon \
     --disable-enr-auto-update \
     --eth1 \

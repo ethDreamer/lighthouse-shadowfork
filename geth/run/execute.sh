@@ -1,13 +1,13 @@
 #!/bin/sh
 
-TESTNETDIR=/shared/merge-testnets/${ETH2_TESTNET}
+TESTNETDIR=/shared/${TESTNET_REPO}/${ETH2_TESTNET}
 
-BOOTFILE=${TESTNETDIR}/el_bootnode.txt
+BOOTFILE=${TESTNETDIR}/inventory/group_vars/all.yaml
 if [ -e $BOOTFILE ]; then
-	BOOT_ARG="--bootnodes=$(cat $BOOTFILE | sed 's/\s\+//g' | tr '\n' ',' | sed 's/,\s*$//')"
+	BOOT_ARG="--bootnodes=$(cat $BOOTFILE | grep -A5 el_bootnode | grep "enode://" | awk '{ print $2 }' | sort | uniq | sed 's/"//g' | tr '\n' ',' | sed 's/,\s*$//')"
 fi
 
-GENFILE=${TESTNETDIR}/genesis.json
+GENFILE=${TESTNETDIR}/custom_config_data/genesis.json
 if [ -e $GENFILE ]; then
     NET_ARG="--networkid=$(cat $GENFILE | grep chainId | awk '{ print $2 }' | sed 's/,//g')"
     if [ ! -e ./datadir ]; then
@@ -18,7 +18,7 @@ if [ -e $GENFILE ]; then
     fi
 fi
 
-ETH2CONFIG=${TESTNETDIR}/config.yaml
+ETH2CONFIG=${TESTNETDIR}/custom_config_data/config.yaml
 TTD=$(cat $ETH2CONFIG | grep TERMINAL_TOTAL_DIFFICULTY | awk '{ print $2 }')
 if [ -n "$TTD" ]; then
     TTD_ARG="--override.terminaltotaldifficulty=$TTD"

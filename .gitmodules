@@ -2,3 +2,6 @@
     path = shared/merge-testnets
     url = https://github.com/eth-clients/merge-testnets.git
     branch = main
+[submodule "shared/withdrawals-testnet"]
+	path = shared/withdrawals-testnet
+	url = https://github.com/ethpandaops/withdrawals-testnet.git

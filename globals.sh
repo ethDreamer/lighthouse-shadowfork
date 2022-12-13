@@ -1,10 +1,12 @@
 #!/bin/bash
 
-export ETH2_TESTNET=mainnet-shadow-fork-1
+export ETH2_TESTNET=withdrawal-devnet-0
 export CONSENSUS_NODE=lighthouse # don't change this as there is no other option
-export EXECUTION_NODE=besu # can be [geth|besu|nethermind]
+export EXECUTION_NODE=geth # can be [geth|besu|nethermind]
 export CONSENSUS_DISC=9002  # discovery TCP/UDP port open to internet for lighthouse
 export EXECUTION_DISC=30305 # discovery TCP/UDP port open to internet for execution node
+
+export TESTNET_REPO=withdrawals-testnet
 
 # set these if you have validators on the testnet
 export VALIDATOR_MNEMONIC=""

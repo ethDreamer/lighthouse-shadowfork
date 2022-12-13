@@ -1,6 +1,6 @@
 #!/bin/bash
 
-TESTNETDIR=/shared/merge-testnets/${ETH2_TESTNET}
+TESTNETDIR=/shared/${TESTNET_REPO}/${ETH2_TESTNET}
 
 BOOTFILE=${TESTNETDIR}/el_bootnode.txt
 if [ -e $BOOTFILE ]; then

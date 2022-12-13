@@ -18,6 +18,7 @@ services:
       - "$EXPLORER_PORT:3333/tcp"
     environment:
       - ETH2_TESTNET
+      - TESTNET_REPO
       - POSTGRES_PASSWORD
       - POSTGRES_USER
       - POSTGRES_DB

@@ -28,11 +28,11 @@ RUN chmod a+x /usr/local/bin/lighthouse
 ENV ETH2_TESTNET goerli-shadow-fork-1
 USER lighthouse_bn
 
-ENTRYPOINT BOOTNODES=$(cat /shared/merge-testnets/${ETH2_TESTNET}/bootstrap_nodes.txt) && \
+ENTRYPOINT BOOTNODES=$(cat /shared/${TESTNET_REPO}/${ETH2_TESTNET}/bootstrap_nodes.txt) && \
     lighthouse \
     --debug-level=debug \
     --datadir=./datadir \
-    --testnet-dir=/shared/merge-testnets/$ETH2_TESTNET \
+    --testnet-dir=/shared/${TESTNET_REPO}/$ETH2_TESTNET \
     beacon \
     --disable-enr-auto-update \
     --eth1 \
