@@ -1,4 +1,4 @@
-FROM parithoshj/geth:master
+FROM bbusa/geth-withdrawals
 
 RUN apk add --no-cache ca-certificates tini
 VOLUME /home/eth1/run

@@ -1,4 +1,4 @@
-FROM sigp/lighthouse:latest-unstable
+FROM ethdreamer/lighthouse:capella
 
 RUN apt update && apt install -y tini
 RUN groupadd -g 1000 beacon && useradd -r -u 1000 -g beacon beacon
