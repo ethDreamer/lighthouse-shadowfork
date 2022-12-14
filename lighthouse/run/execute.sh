@@ -77,10 +77,10 @@ echo "STATIC_PEERS: $STATIC_PEERS"
 
 ###################### END SHIT TO DELETE ############################
 
-#BOOTFILE=/shared/${TESTNET_REPO}/${ETH2_TESTNET}/inventory/group_vars/all.yaml
-#if [ -e $BOOTFILE ]; then
-BOOT_ARG="--boot-nodes=enr:-Ly4QD5d0DlgnQXhlcbwJnggjktdnvojFOrcZdXekvgIf_CRSrv6VrxVDEdD7b8L-RyrQTpw3WqSa5zCCA187Unirg5Qh2F0dG5ldHOIGRBEQimAhceEZXRoMpB6izmDQAAAQP__________gmlkgnY0gmlwhKdHPBCJc2VjcDI1NmsxoQL7YnfdZM8qhs6zOb6QSk3HsFpWYr7d4VQuz7vocTLt4ohzeW5jbmV0cwuDdGNwgiMog3VkcIIjKA"
-#fi
+BOOTFILE=/shared/${TESTNET_REPO}/${ETH2_TESTNET}/inventory/group_vars/all.yaml
+if [ -e $BOOTFILE ]; then
+    BOOT_ARG="--boot-nodes=$(cat $BOOTFILE | grep -A5 bootnode_enrs | grep 'enr:' | awk '{ print $2 }' | sed 's/"//g' | tr '\n' ',' | sed 's/,$//')"
+fi
 
 
 if [ "$METRICS_ENABLED" = "true" ]; then
