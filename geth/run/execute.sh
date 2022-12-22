@@ -38,10 +38,12 @@ exec geth \
     --http.api="engine,eth,web3,net,debug,admin" \
     --http.vhosts=\* \
     --port $EXECUTION_DISC \
+    --discovery.port $EXECUTION_DISC \
+    --nat="extip:$(dig +short myip.opendns.com @resolver1.opendns.com)" \
     $NET_ARG \
     $BOOT_ARG \
-    --syncmode snap \
-    --verbosity=3 \
+    --syncmode full \
+    --verbosity=4 \
     --authrpc.addr 0.0.0.0 \
     --authrpc.port 8560 \
     --authrpc.vhosts \* \

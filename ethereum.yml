@@ -3,13 +3,13 @@ services:
   consensus-bn:
     build: ./${CONSENSUS_NODE}/build
     ports:
-      - "${CONSENSUS_DISC}:9000/tcp"
-      - "${CONSENSUS_DISC}:9000/udp"
-    expose:
-      - 5052
+      - "${CONSENSUS_DISC}:${CONSENSUS_DISC}/tcp"
+      - "${CONSENSUS_DISC}:${CONSENSUS_DISC}/udp"
+      - "6052:5052"
     environment:
       - TESTNET_REPO
       - ETH2_TESTNET
+      - CONSENSUS_DISC
     volumes:
       - ./${CONSENSUS_NODE}/run:/home/beacon/run
       - ./shared/:/shared
@@ -38,8 +38,8 @@ services:
     ports:
       - "${EXECUTION_DISC}:${EXECUTION_DISC}/tcp"
       - "${EXECUTION_DISC}:${EXECUTION_DISC}/udp"
+      - "8545:8545"
     expose:
-      - 8545
       - 8560
     volumes:
       - ./${EXECUTION_NODE}/run:/home/eth1/run

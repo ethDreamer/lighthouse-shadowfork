@@ -1,6 +1,6 @@
 FROM ethdreamer/lighthouse:capella
 
-RUN apt update && apt install -y tini
+RUN apt update && apt install -y tini dnsutils
 RUN groupadd -g 1000 beacon && useradd -r -u 1000 -g beacon beacon
 
 WORKDIR /home/beacon/run
