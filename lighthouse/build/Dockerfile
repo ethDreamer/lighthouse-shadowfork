@@ -1,4 +1,4 @@
-FROM ethdreamer/lighthouse:capella
+FROM sigp/lighthouse:capella
 
 RUN apt update && apt install -y tini dnsutils
 RUN groupadd -g 1000 beacon && useradd -r -u 1000 -g beacon beacon
