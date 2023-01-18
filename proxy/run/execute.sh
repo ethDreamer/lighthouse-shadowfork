@@ -15,7 +15,6 @@ echo "RELAY_ENABLED[$RELAY_ENABLED] MEVBOOST_ENABLED[$MEVBOOST_ENABLED] TARGET[$
 
 /home/json_rpc_snoop/bin/json_rpc_snoop \
 	-p 8560 \
-	-l \
 	-b 0.0.0.0 \
 	 $TARGET
 
